@@ -11,29 +11,13 @@ cmds := node npm tsc webstorm bun deno gjs just awk gpp	realpath ln curl
 
 # Adds very generic targets `targets`, `variables` and `check`
 include $(makefile).mk
-.PSEUDO: bootstrap generate lift clean
+.PSEUDO: bootstrap clean
 
-bootstrap: generate lift
-	echo $@ complete.
+bootstrap:
+	@echo $@ed >&2
 
-# Lift (copy) pertinent config files from here to project root
-lifted := $(PROOT)/.envrc $(PROOT)/.gitignore
-lift: $(lifted)
-$(PROOT)/.envrc: $(here)/.envrc
-	cp -v $< $@
-$(PROOT)/.gitignore: $(here)/.gitignore
-	cp -v $< $@
-
-
-# Some configuration is generated.
-generate: $(here)/.gitignore
-$(here)/.gitignore: 
-	curl --silent --no-progress-bar --show-error --location -o $@ https://www.toptal.com/developers/gitignore/api/bash,git,linux,node,deno,bun,javascript,ecmascript,typescript
-	echo .envrc >> $@
-
-clean: $(lifted)
-	xz --force $<
-	@echo "make -f $(makefile) bootstrap ## next" >&2
+clean:
+	@echo $@ed >&2
 
 
 
